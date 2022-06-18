@@ -9,6 +9,7 @@ Demo app for FastAPI with Celery and Flower.
 - Clone the repo
 - Make sure  docker and docker-compose (https://docs.docker.com/compose/install/) are installed
 - `cd` into the cloned directory
+- Create `.env` file with `REDIS_BROKER_URL` and `REDIS_BACKEND_URL` (eg: `redis://redis:6379/0`)
 - ```docker compose build```
 - ```docker compose up```
 
