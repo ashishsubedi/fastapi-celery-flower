@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+
+    build: ./app
+    ports:
+      - 8004:8000
+    command: uvicorn app.app:app --host 0.0.0.0 --reload
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      - CELERY_BROKER_URL=${REDIS_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_RESULT_URL}
+    depends_on:
+      - redis
+
+  celery_worker:
+    build: ./app
+    command: celery --app app.celery_worker:celery_app worker --loglevel=info
+    volumes:
+      - ./app:/usr/src/app
+    environment:
+      - CELERY_BROKER_URL=${REDIS_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_RESULT_URL}
+    depends_on:
+      - app
+      - redis
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+  flower:
+    build: ./app
+    command: celery flower --app app.celery_worker.celery_app --port=5555 --broker=${REDIS_BROKER_URL}
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=${REDIS_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${REDIS_RESULT_URL}
+
+    depends_on:
+      - app
+      - redis
+      - celery_worker
