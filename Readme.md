@@ -1,8 +1,8 @@
 ## Demo application for FastAPI, Celery, Flower
 
 Demo app for FastAPI with Celery and Flower.   
-[Celery](https://docs.celeryq.dev/en/stable/) is distributed task queues for offloading task from application to celery-workers.  
-[Flower](!https://flower.readthedocs.io/en/latest/)is a web based tool for monitoring and administrating Celery clusters. 
+[Celery](https://docs.celeryq.dev/en/stable/) is distributed task queues for offloading task from application to celery-workers.   
+[Flower](https://flower.readthedocs.io/en/latest/) is a web based tool for monitoring and administrating Celery clusters. 
 
 
 ### How to run
